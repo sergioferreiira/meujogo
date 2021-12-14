@@ -1,14 +1,17 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class ControlaJogador : MonoBehaviour
 
 {
+    // variaveis
     float Velocidade = 15;
     public GameObject TextoGameOver;
     public int Vida = 100;
     public ControlaInterface scriptControlaInterface;
+    // fimvariaveis
+
     // Update is called once per frame
     void Update()
     {
@@ -47,10 +50,14 @@ public class ControlaJogador : MonoBehaviour
         scriptControlaInterface.AtualizarSliderVidaJogador();
         if (Vida <= 0)
         {
-            Time.timeScale = 0;
-            GetComponent<ControlaJogador>().TextoGameOver.SetActive(true);
+            Morrer();
         }
     }
+    public void Morrer()
+    {
+        Time.timeScale = 0;
+        GetComponent<ControlaJogador>().TextoGameOver.SetActive(true);
+    }
 }
-//dasdasdsada
+
 

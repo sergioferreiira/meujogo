@@ -1,13 +1,13 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monstro : MonoBehaviour
+public class Monstro : MonoBehaviour 
 {
     // variaveis
     public GameObject Jogador;
-    public GameObject TextoGameOver;
     float Velocidade = 1f;
+    public int Vida = 100;
     // end variaveis
 
     void Start()
@@ -47,6 +47,20 @@ public class Monstro : MonoBehaviour
         int dano = Random.Range(15, 30);
         Jogador.GetComponent<ControlaJogador>().TomarDano(dano);
 
+    }
+
+    public void TomarDano(int dano)
+    {
+        Vida -= dano;
+        if(Vida <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void Morrer()
+    {
+       
     }
 }
 
