@@ -14,8 +14,8 @@ public class FirstPersonCamera : MonoBehaviour
     float rotationX = 0;
     float rotationY = 0;
 
-    float angleYmin = -90;
-    float angleYmax = 90;
+    float angleYmin = -40;
+    float angleYmax = 70;
 
 
     // Start is called before the first frame update

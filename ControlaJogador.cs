@@ -6,7 +6,10 @@ public class ControlaJogador : MonoBehaviour
 
 {
     // variaveis
-    float Velocidade = 15;
+    Vector3 forward;
+    Vector3 strafe;
+    Vector3 vertical;
+    float Velocidade = 10;
     public GameObject TextoGameOver;
     public int Vida = 100;
     public ControlaInterface scriptControlaInterface;
@@ -15,10 +18,14 @@ public class ControlaJogador : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float eixoX = Input.GetAxis("Horizontal");
-        float eixoZ = Input.GetAxis("Vertical");
-        Vector3 direcao = new Vector3(eixoX, 0, eixoZ);
+        float forwardInput = Input.GetAxisRaw("Vertical");
+        float strafeInput = Input.GetAxisRaw("Horizontal");
+
+        Vector3 direcao = new Vector3(strafeInput, 0, forwardInput);
+
         transform.Translate(direcao * Velocidade * Time.deltaTime);
+
+
         if (direcao != Vector3.zero)
         {
             GetComponent<Animator>().SetBool("Run", true);
@@ -26,6 +33,15 @@ public class ControlaJogador : MonoBehaviour
         else
         {
             GetComponent<Animator>().SetBool("Run", false);
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            GetComponent<Animator>().SetBool("DrawArrow", true);
+        }
+        else
+        {
+            GetComponent<Animator>().SetBool("DrawArrow", false);
+
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
