@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,114 +5,53 @@ public class ControlaJogador : MonoBehaviour
 
 {
     // variaveis
-    Vector3 forward;
-    Vector3 strafe;
-    Vector3 vertical;
-    float Velocidade = 10;
+    float Velocidade = 7;
+    Vector3 direcao;
     public GameObject TextoGameOver;
     public int Vida = 100;
     public ControlaInterface scriptControlaInterface;
+    public LayerMask MascaraChao;
+    private Animator animatorJogador;
+    private MovimentoPersonagem movimentaJogador;
+
     // fimvariaveis
 
-    // Update is called once per frame
-    void Update()
+    void Start ()
     {
-        float forwardInput = Input.GetAxisRaw("Vertical");
-        float strafeInput = Input.GetAxisRaw("Horizontal");
-
-        Vector3 direcao = new Vector3(strafeInput, 0, forwardInput);
-
-        transform.Translate(direcao * Velocidade * Time.deltaTime);
-
-
-        if (direcao != Vector3.zero)
-        {
-            GetComponent<Animator>().SetBool("Run", true);
-        }
-        else
-        {
-            GetComponent<Animator>().SetBool("Run", false);
-        }
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            GetComponent<Animator>().SetBool("DrawArrow", true);
-        }
-        else
-        {
-            GetComponent<Animator>().SetBool("DrawArrow", false);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            GetComponent<Animator>().SetBool("Attack", true);
-        }
-        else
-        {
-            GetComponent<Animator>().SetBool("Attack", false);
-        }
-        if (Vida <= 0)
-        {
-            if (Input.GetButtonDown("Fire1"))
-            {
-                SceneManager.LoadScene("MyGame");
-                Time.timeScale = 1;
-            }
-        }
+        animatorJogador = GetComponent<Animator>();
+        movimentaJogador = GetComponent<MovimentoPersonagem>();
     }
-    public void TomarDano(int dano)
-    {
-        Vida -= dano;
-        scriptControlaInterface.AtualizarSliderVidaJogador();
-        if (Vida <= 0)
-        {
-            Morrer();
-        }
-    }
-    public void Morrer()
-    {
-        Time.timeScale = 0;
-        GetComponent<ControlaJogador>().TextoGameOver.SetActive(true);
-    }
-}
-
-
-=======
-
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-public class ControlaJogador : MonoBehaviour
-
-{
-    // variaveis
-    float Velocidade = 15;
-    public GameObject TextoGameOver;
-    public int Vida = 100;
-    public ControlaInterface scriptControlaInterface;
-    // fimvariaveis
-
-    // Update is called once per frame
     void Update()
     {
         float eixoX = Input.GetAxis("Horizontal");
         float eixoZ = Input.GetAxis("Vertical");
-        Vector3 direcao = new Vector3(eixoX, 0, eixoZ);
-        transform.Translate(direcao * Velocidade * Time.deltaTime);
+
+        direcao = new Vector3(eixoX, 0, eixoZ);
+        
+         
         if (direcao != Vector3.zero)
         {
-            GetComponent<Animator>().SetBool("Run", true);
+            animatorJogador.SetBool("Run", true);
         }
         else
         {
-            GetComponent<Animator>().SetBool("Run", false);
+            animatorJogador.SetBool("Run", false);
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            animatorJogador.SetBool("DrawArrow", true);
+        }
+        else
+        {
+            animatorJogador.SetBool("DrawArrow", false);
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            GetComponent<Animator>().SetBool("Attack", true);
+            animatorJogador.SetBool("Attack", true);
         }
         else
         {
-            GetComponent<Animator>().SetBool("Attack", false);
+            animatorJogador.SetBool("Attack", false);
         }
         if (Vida <= 0)
         {
@@ -123,6 +60,27 @@ public class ControlaJogador : MonoBehaviour
                 SceneManager.LoadScene("MyGame");
                 Time.timeScale = 1;
             }
+        }
+    }
+    void FixedUpdate()
+    {
+        movimentaJogador.Movimentar(direcao, Velocidade);
+
+        Ray raio = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(raio.origin, raio.direction, Color.red);
+
+        RaycastHit impacto;
+
+        if(Physics.Raycast(raio, out impacto, 100))
+        {
+            Vector3 posicaoMiraJogador = impacto.point - transform.position;
+
+            posicaoMiraJogador.y = 0;
+
+            Quaternion novaRotacao = Quaternion.LookRotation(posicaoMiraJogador);
+
+            GetComponent<Rigidbody>().MoveRotation(novaRotacao);
+
         }
     }
     public void TomarDano(int dano)
@@ -140,6 +98,3 @@ public class ControlaJogador : MonoBehaviour
         GetComponent<ControlaJogador>().TextoGameOver.SetActive(true);
     }
 }
-
-
->>>>>>> 896ecda73e9070615170c20e4ffaa889ecdd16f0

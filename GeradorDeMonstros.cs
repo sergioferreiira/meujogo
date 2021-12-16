@@ -1,41 +1,32 @@
-<<<<<<< HEAD
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GeradorDeMonstros : MonoBehaviour
 {
-    public GameObject Monstro;
-    float contadorTempo = 0;
-    public float TempoGerarMonstro = 10;
-    void update()
-    {
-        contadorTempo += Time.deltaTime;
-        if (contadorTempo >= TempoGerarMonstro)
-        {
-            Instantiate(Monstro, transform.position, transform.rotation);
-            contadorTempo = 0;
-        }
-    }
-}
-=======
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class GeradorDeMonstros : MonoBehaviour
-{
     public GameObject Monstro;
     float contadorTempo = 0;
-    public float TempoGerarMonstro = 10;
-    void update()
+    private float TempoGerarZumbi = 10;
+
+    // Use this for initialization
+    void Start()
     {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
         contadorTempo += Time.deltaTime;
-        if (contadorTempo >= TempoGerarMonstro)
+
+        if (contadorTempo >= TempoGerarZumbi)
         {
             Instantiate(Monstro, transform.position, transform.rotation);
             contadorTempo = 0;
         }
+
     }
+
 }
->>>>>>> 896ecda73e9070615170c20e4ffaa889ecdd16f0
