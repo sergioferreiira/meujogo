@@ -1,0 +1,63 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Minions : MonoBehaviour
+{
+    // variaveis
+    public GameObject Jogador;
+    float Velocidade = 1f;
+    public int Vida = 50;
+
+//    private Animator animatorInimigo;
+//   private MovimentoPersonagem movimentaInimigo;
+    
+    // end variaveis
+
+    void Start()
+    {
+        Jogador = GameObject.FindWithTag("Jogador");
+        animatorInimigo = GetComponent<Animator>();
+        movimentaInimigo = GetComponent<MovimentoPersonagem>();
+    }
+    void FixedUpdate()
+    {
+        float distancia = Vector3.Distance(transform.position, Jogador.transform.position);
+
+        Vector3 direcao = Jogador.transform.position - transform.position;
+       
+        movimentaInimigo.Rotacionar(direcao);
+
+        if (distancia <= 10)
+        {
+            animatorInimigo.SetBool("Run", true);
+            // run to player
+            movimentaInimigo.Movimentar(direcao, Velocidade);
+            // end run to player
+        }
+        if (distancia <= 5)
+        {
+            animatorInimigo.SetBool("Run", false);
+            animatorInimigo.SetBool("Attack", true);
+        }
+        if (distancia >= 5)
+        {
+            animatorInimigo.SetBool("Attack", false);
+        }
+    }
+    void AtacaJogador()
+    {
+        int dano = Random.Range(5, 12);
+        Jogador.GetComponent<ControlaJogador>().TomarDano(dano);
+
+    }
+
+    public void TomarDano(int dano)
+    {
+        Vida -= dano;
+        if (Vida <= 0)
+        {
+	    animatorInimigo.SetBool("Morrer", true)
+            Destroy(gameObject);
+        }
+    }
+}
