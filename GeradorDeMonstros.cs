@@ -6,27 +6,58 @@ public class GeradorDeMonstros : MonoBehaviour
 {
 
     public GameObject Monstro;
-    float contadorTempo = 0;
-    private float TempoGerarZumbi = 10;
+    private float contadorTempo = 0;
+    public float TempoGerarMonstro = 15;
+    public LayerMask LayerDosMonstros;
+    private float distanciaDeGeracao = 3;
+    private float DistanciaDoJogadorParaGeracao = 10;
+    private GameObject jogador;
 
-    // Use this for initialization
-    void Start()
+    public void start()
     {
-
+        jogador = GameObject.FindWithTag("Jogador");
     }
-
-    // Update is called once per frame
     void Update()
     {
 
+        // if (Vector3.Distance(transform.position, jogador.transform.position) > DistanciaDoJogadorParaGeracao)
+        // {
+        // }
         contadorTempo += Time.deltaTime;
 
-        if (contadorTempo >= TempoGerarZumbi)
+        if (contadorTempo >= TempoGerarMonstro)
         {
-            Instantiate(Monstro, transform.position, transform.rotation);
+            StartCoroutine(GerarNovoMonstro());
             contadorTempo = 0;
         }
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, distanciaDeGeracao);
+    }
+    IEnumerator GerarNovoMonstro()
+    {
+        Vector3 posicaoDeCriacao = AleatorizarPosicao();
+        Collider[] colisores = Physics.OverlapSphere(posicaoDeCriacao, 1, LayerDosMonstros);
 
+        while (colisores.Length > 0)
+        {
+            posicaoDeCriacao = AleatorizarPosicao();
+            colisores = Physics.OverlapSphere(posicaoDeCriacao, 1, LayerDosMonstros);
+            yield return null;
+        }
+
+        Instantiate(Monstro, posicaoDeCriacao, transform.rotation);
+    }
+
+    Vector3 AleatorizarPosicao()
+    {
+        Vector3 posicao = Random.insideUnitSphere * distanciaDeGeracao;
+        posicao += transform.position;
+        posicao.y = 0;
+
+        return posicao;
     }
 
 }

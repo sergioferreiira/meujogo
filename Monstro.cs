@@ -10,6 +10,7 @@ public class Monstro : MonoBehaviour
 
     private Animator animatorInimigo;
     private MovimentoPersonagem movimentaInimigo;
+    private Animacoes animacoesInimigo;
     
     // end variaveis
 
@@ -18,6 +19,7 @@ public class Monstro : MonoBehaviour
         Jogador = GameObject.FindWithTag("Jogador");
         animatorInimigo = GetComponent<Animator>();
         movimentaInimigo = GetComponent<MovimentoPersonagem>();
+        animacoesInimigo = GetComponent<Animacoes>();
     }
     void FixedUpdate()
     {
@@ -38,20 +40,19 @@ public class Monstro : MonoBehaviour
         }
         if (distancia <= 15)
         {
-            animatorInimigo.SetBool("Run", true);
+            animacoesInimigo.Correr(true);
             // correr ate o personagem
             movimentaInimigo.Movimentar(direcao, Velocidade);
             // fim correr ate o personagem
         }
-        if (distancia <= 9)
+        if (distancia <= 12)
         {
-            animatorInimigo.SetBool("Run", false);
-            animatorInimigo.SetBool("Attack", true);
+            animacoesInimigo.Correr(false);
+            animacoesInimigo.Atacar(true);
         }
-        if (distancia >= 9)
+        if (distancia >= 12)
         {
-            animatorInimigo.SetBool("Attack", false);
-        }
+            animacoesInimigo.Atacar(false);        }
     }
     void AtacaJogador()
     {

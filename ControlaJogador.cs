@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 public class ControlaJogador : MonoBehaviour
 
 {
@@ -8,18 +7,21 @@ public class ControlaJogador : MonoBehaviour
     float Velocidade = 7;
     Vector3 direcao;
     public GameObject TextoGameOver;
+    public GameObject InterfaceGameOver;
     public int Vida = 100;
     public ControlaInterface scriptControlaInterface;
     public LayerMask MascaraChao;
     private Animator animatorJogador;
     private MovimentoPersonagem movimentaJogador;
+    private Animacoes animacoesJogador;
 
     // fimvariaveis
 
-    void Start ()
+    void Start()
     {
         animatorJogador = GetComponent<Animator>();
         movimentaJogador = GetComponent<MovimentoPersonagem>();
+        animacoesJogador = GetComponent<Animacoes>();
     }
     void Update()
     {
@@ -27,15 +29,15 @@ public class ControlaJogador : MonoBehaviour
         float eixoZ = Input.GetAxis("Vertical");
 
         direcao = new Vector3(eixoX, 0, eixoZ);
-        
-         
+
+
         if (direcao != Vector3.zero)
         {
-            animatorJogador.SetBool("Run", true);
+            animacoesJogador.Correr(true);
         }
         else
         {
-            animatorJogador.SetBool("Run", false);
+            animacoesJogador.Correr(false);
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -47,19 +49,11 @@ public class ControlaJogador : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            animatorJogador.SetBool("Attack", true);
+            animacoesJogador.Atacar(true);
         }
         else
         {
-            animatorJogador.SetBool("Attack", false);
-        }
-        if (Vida <= 0)
-        {
-            if (Input.GetButtonDown("Fire1"))
-            {
-                SceneManager.LoadScene("MyGame");
-                Time.timeScale = 1;
-            }
+            animacoesJogador.Atacar(false);
         }
     }
     void FixedUpdate()
@@ -71,7 +65,7 @@ public class ControlaJogador : MonoBehaviour
 
         RaycastHit impacto;
 
-        if(Physics.Raycast(raio, out impacto, 100))
+        if (Physics.Raycast(raio, out impacto, 100))
         {
             Vector3 posicaoMiraJogador = impacto.point - transform.position;
 
@@ -94,7 +88,8 @@ public class ControlaJogador : MonoBehaviour
     }
     public void Morrer()
     {
-        Time.timeScale = 0;
-        GetComponent<ControlaJogador>().TextoGameOver.SetActive(true);
+
+        scriptControlaInterface.GameOver();
+
     }
 }

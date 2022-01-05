@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: d12565703a169024b86ac4e7cdb74109
+guid: 43c7c9a88dc3c2a4d9f21bb9f809ca07
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - Monstro: {fileID: 8300155280233479856, guid: 7bafb73fbfa875b44a957f720a4a8e90, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
