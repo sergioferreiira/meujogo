@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowScript : MonoBehaviour
+public class magiaScript : MonoBehaviour
 {
     float Velocidade = 35;
     void FixedUpdate ()

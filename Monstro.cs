@@ -29,15 +29,15 @@ public class Monstro : MonoBehaviour
        
         movimentaInimigo.Rotacionar(direcao);
 
-        if (distancia <= 25)
-        {
-            animatorInimigo.SetBool("FlyFloat", true);
+        // if (distancia <= 25)
+        // {
+        //     animatorInimigo.SetBool("FlyFloat", true);
 
-        }
-        if (distancia <= 20)
-        {
-            animatorInimigo.SetBool("land", true);
-        }
+        // }
+        // if (distancia <= 20)
+        // {
+        //     animatorInimigo.SetBool("land", true);
+        // }
         if (distancia <= 15)
         {
             animacoesInimigo.Correr(true);
