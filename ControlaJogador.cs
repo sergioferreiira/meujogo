@@ -4,7 +4,7 @@ public class ControlaJogador : MonoBehaviour
 
 {
     // variaveis
-    float Velocidade = 7;
+    float Velocidade = 4;
     Vector3 direcao;
     public GameObject TextoGameOver;
     public GameObject InterfaceGameOver;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class magiaScript : MonoBehaviour
 {
-    float Velocidade = 35;
+    float Velocidade = 25;
     void FixedUpdate ()
     {
         GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + transform.forward * Velocidade * Time.deltaTime);

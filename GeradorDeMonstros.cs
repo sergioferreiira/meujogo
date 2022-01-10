@@ -11,7 +11,7 @@ public class GeradorDeMonstros : MonoBehaviour
     public LayerMask LayerDosMonstros;
     private float distanciaDeGeracao = 3;
     private float DistanciaDoJogadorParaGeracao = 10;
-    private GameObject jogador;
+    public GameObject jogador;
 
     public void start()
     {
@@ -20,16 +20,17 @@ public class GeradorDeMonstros : MonoBehaviour
     void Update()
     {
 
-        // if (Vector3.Distance(transform.position, jogador.transform.position) > DistanciaDoJogadorParaGeracao)
-        // {
-        // }
-        contadorTempo += Time.deltaTime;
+        if (Vector3.Distance(transform.position, jogador.transform.position) > DistanciaDoJogadorParaGeracao)
+        {
+                    contadorTempo += Time.deltaTime;
 
         if (contadorTempo >= TempoGerarMonstro)
         {
             StartCoroutine(GerarNovoMonstro());
             contadorTempo = 0;
         }
+        }
+
     }
     void OnDrawGizmos()
     {
